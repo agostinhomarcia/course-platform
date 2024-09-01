@@ -1,6 +1,6 @@
-import Link from "next/link";
 import React from "react";
-import CourseCard from "../components/CourseCard";
+import Link from "next/link";
+import Image from "next/image";
 
 const courses = [
   {
@@ -30,11 +30,19 @@ const CoursesPage = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (
           <Link key={course.id} href={`/courses/${course.id}`}>
-            <CourseCard
-              title={course.title}
-              description={course.description}
-              imageUrl={course.imageUrl}
-            />
+            <div className="border rounded-lg overflow-hidden shadow-lg cursor-pointer">
+              <Image
+                src={course.imageUrl}
+                alt={course.title}
+                width={300}
+                height={200}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h2 className="text-2xl font-bold mb-2">{course.title}</h2>
+                <p className="text-gray-700">{course.description}</p>
+              </div>
+            </div>
           </Link>
         ))}
       </div>

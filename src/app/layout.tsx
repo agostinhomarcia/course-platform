@@ -6,6 +6,9 @@ import React from "react";
 export const metadata = {
   title: "Plataforma de Cursos",
   description: "Aprenda novos tópicos com cursos sob demanda.",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
