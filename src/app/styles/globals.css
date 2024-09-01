@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.test-bg {
-  @apply bg-red-500;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1a202c;
+  font-family: sans-serif;
 }

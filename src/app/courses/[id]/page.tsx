@@ -1,7 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
+import { FaReact, FaJs } from "react-icons/fa";
+import { AiOutlineHtml5 } from "react-icons/ai";
+import { SiTailwindcss, SiNextdotjs, SiCss3 } from "react-icons/si";
 import Link from "next/link";
 
 interface CourseDetailProps {
@@ -15,7 +17,7 @@ const courseData: {
     title: string;
     description: string;
     content: string;
-    imageUrl: string;
+    icon: JSX.Element;
     modules: {
       id: number;
       title: string;
@@ -28,7 +30,7 @@ const courseData: {
     description: "Aprenda React do básico ao avançado.",
     content:
       "Neste curso, você aprenderá sobre componentes, estado, hooks, e muito mais.",
-    imageUrl: "/react.png",
+    icon: <FaReact size={80} className="text-blue-500" />,
     modules: [
       {
         id: 1,
@@ -55,7 +57,7 @@ const courseData: {
     description: "Construa aplicações escaláveis com Next.js.",
     content:
       "Este curso aborda roteamento, SSR, SSG, API Routes, e outras funcionalidades do Next.js.",
-    imageUrl: "/next.png",
+    icon: <SiNextdotjs size={80} className="text-gray-800" />,
     modules: [
       {
         id: 1,
@@ -78,7 +80,7 @@ const courseData: {
     description: "Estilize suas aplicações de forma rápida e eficiente.",
     content:
       "Aprenda a utilizar o Tailwind CSS para criar layouts responsivos e modernos.",
-    imageUrl: "/tailwind.jpg",
+    icon: <SiTailwindcss size={80} className="text-blue-400" />,
     modules: [
       {
         id: 1,
@@ -100,6 +102,57 @@ const courseData: {
       },
     ],
   },
+  4: {
+    title: "Curso de JavaScript",
+    description: "Domine a linguagem de programação mais popular da web.",
+    content:
+      "Este curso cobre desde o básico do JavaScript até conceitos avançados como Promises e Async/Await.",
+    icon: <FaJs size={80} className="text-yellow-500" />,
+    modules: [
+      {
+        id: 1,
+        title: "Módulo 1: Fundamentos do JavaScript",
+        lessons: ["O que é JavaScript?", "Sintaxe Básica", "Tipos de Dados"],
+      },
+      {
+        id: 2,
+        title: "Módulo 2: Programação Avançada",
+        lessons: [
+          "Funções e Escopo",
+          "Manipulação de DOM",
+          "Promises e Async/Await",
+        ],
+      },
+    ],
+  },
+  5: {
+    title: "Curso de HTML & CSS",
+    description: "Aprenda a construir websites com HTML5 e CSS3.",
+    content:
+      "Este curso ensina como estruturar e estilizar páginas web utilizando HTML5 e CSS3.",
+    icon: (
+      <div className="flex space-x-4 justify-center">
+        <AiOutlineHtml5 size={80} className="text-orange-500" />
+        <SiCss3 size={80} className="text-blue-500" />
+      </div>
+    ),
+    modules: [
+      {
+        id: 1,
+        title: "Módulo 1: Estrutura com HTML",
+        lessons: [
+          "Tags e Elementos HTML",
+          "Estrutura Básica de um Documento HTML",
+          "Semântica HTML",
+        ],
+      },
+      {
+        id: 2,
+        title: "Módulo 2: Estilização com CSS",
+        lessons: ["Seletores CSS", "Box Model", "Flexbox e Grid Layout"],
+      },
+    ],
+  },
 };
 
 const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
@@ -107,7 +160,6 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
   const course = courseData[courseId];
 
   const [isEnrolled, setIsEnrolled] = useState<boolean>(false);
-  const [progress, setProgress] = useState<{ [key: number]: boolean[] }>({});
 
   useEffect(() => {
     const enrolledCourses = JSON.parse(
@@ -115,13 +167,6 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
     );
     if (enrolledCourses.includes(courseId)) {
       setIsEnrolled(true);
-    }
-
-    const savedProgress = JSON.parse(
-      localStorage.getItem("courseProgress") || "{}"
-    );
-    if (savedProgress[courseId]) {
-      setProgress(savedProgress);
     }
   }, [courseId]);
 
@@ -136,20 +181,15 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
     }
   };
 
-  const toggleLessonCompletion = (moduleId: number, lessonIndex: number) => {
-    const updatedProgress = { ...progress };
-    if (!updatedProgress[courseId]) {
-      updatedProgress[courseId] = [];
-    }
-
-    if (!updatedProgress[courseId][moduleId]) {
-      updatedProgress[courseId][moduleId] = [];
-    }
-
-    updatedProgress[courseId][moduleId][lessonIndex] =
-      !updatedProgress[courseId][moduleId][lessonIndex];
-    setProgress(updatedProgress);
-    localStorage.setItem("courseProgress", JSON.stringify(updatedProgress));
+  const handleUnenrollment = () => {
+    const enrolledCourses = JSON.parse(
+      localStorage.getItem("enrolledCourses") || "[]"
+    );
+    const updatedCourses = enrolledCourses.filter(
+      (id: number) => id !== courseId
+    );
+    localStorage.setItem("enrolledCourses", JSON.stringify(updatedCourses));
+    setIsEnrolled(false);
   };
 
   if (!course) {
@@ -159,13 +199,9 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
   return (
     <div>
       <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
-      <Image
-        src={course.imageUrl}
-        alt={course.title}
-        width={300}
-        height={200}
-        className="w-full h-64 object-cover mb-4"
-      />
+      <div className="w-full h-64 flex justify-center items-center mb-4">
+        {course.icon}
+      </div>
       <p className="text-lg mb-4">{course.description}</p>
 
       {!isEnrolled ? (
@@ -180,32 +216,30 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
           <p className="text-green-700 font-bold">
             Você está inscrito neste curso!
           </p>
-          <Link href={`/courses/${courseId}/payment`}>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg mt-4">
-              Ir para Pagamento
+          <div className="flex space-x-4 mt-4">
+            <Link href={`/courses/${courseId}/payment`}>
+              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+                Ir para Pagamento
+              </button>
+            </Link>
+            <button
+              onClick={handleUnenrollment}
+              className="bg-red-600 text-white px-4 py-2 rounded-lg"
+            >
+              Desfazer Matrícula
             </button>
-          </Link>
+          </div>
         </div>
       )}
 
       <div className="mt-8">
         <h2 className="text-3xl font-bold mb-4">Conteúdo do Curso</h2>
-        {course.modules.map((module, moduleIndex) => (
+        {course.modules.map((module) => (
           <div key={module.id} className="mb-6">
             <h3 className="text-2xl font-semibold mb-2">{module.title}</h3>
             <ul className="list-disc list-inside">
-              {module.lessons.map((lesson, lessonIndex) => (
-                <li key={lessonIndex} className="ml-4 flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={
-                      progress[courseId]?.[moduleIndex]?.[lessonIndex] || false
-                    }
-                    onChange={() =>
-                      toggleLessonCompletion(moduleIndex, lessonIndex)
-                    }
-                    className="mr-2"
-                  />
+              {module.lessons.map((lesson, index) => (
+                <li key={index} className="ml-4">
                   {lesson}
                 </li>
               ))}
