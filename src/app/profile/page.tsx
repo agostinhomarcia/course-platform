@@ -40,7 +40,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-900 text-white p-8">
       <h1 className="text-4xl font-bold mb-6">Olá, DevMarcia</h1>
       <h2 className="text-2xl font-semibold mb-6 mt-4">Cursos Inscritos</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

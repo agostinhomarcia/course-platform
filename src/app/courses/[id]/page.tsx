@@ -197,7 +197,7 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
   }
 
   return (
-    <div>
+    <div className="bg-slate-300">
       <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
       <div className="w-full h-64 flex justify-center items-center mb-4">
         {course.icon}
