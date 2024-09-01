@@ -1,12 +1,17 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <div>
       <h1 className="text-3xl font-bold mb-4">
         Bem-vindo à Plataforma de Cursos
       </h1>
-      <p className="text-lg text-gray-700">
+      <p className="text-lg text-gray-700 mb-4">
         Aqui você pode encontrar e aprender sobre diversos tópicos!
       </p>
+      <Link href="/courses" className="text-blue-600 hover:underline">
+        Veja todos os cursos disponíveis
+      </Link>
     </div>
   );
 }
