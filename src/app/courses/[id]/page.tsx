@@ -5,6 +5,7 @@ import { FaReact, FaJs } from "react-icons/fa";
 import { AiOutlineHtml5 } from "react-icons/ai";
 import { SiTailwindcss, SiNextdotjs, SiCss3 } from "react-icons/si";
 import Link from "next/link";
+import Image from "next/image";
 
 interface CourseDetailProps {
   params: {
@@ -18,6 +19,7 @@ const courseData: {
     description: string;
     content: string;
     icon: JSX.Element;
+    imageUrl: string;
     modules: {
       id: number;
       title: string;
@@ -26,11 +28,12 @@ const courseData: {
   };
 } = {
   1: {
-    title: "Curso de React",
+    title: "React",
     description: "Aprenda React do básico ao avançado.",
     content:
       "Neste curso, você aprenderá sobre componentes, estado, hooks, e muito mais.",
-    icon: <FaReact size={80} className="text-blue-500" />,
+    icon: <FaReact size={50} className="text-blue-500" />,
+    imageUrl: "/react.png",
     modules: [
       {
         id: 1,
@@ -53,11 +56,12 @@ const courseData: {
     ],
   },
   2: {
-    title: "Curso de Next.js",
+    title: "Next.js",
     description: "Construa aplicações escaláveis com Next.js.",
     content:
       "Este curso aborda roteamento, SSR, SSG, API Routes, e outras funcionalidades do Next.js.",
-    icon: <SiNextdotjs size={80} className="text-gray-800" />,
+    icon: <SiNextdotjs size={50} className="text-gray-800" />,
+    imageUrl: "/next.png",
     modules: [
       {
         id: 1,
@@ -76,11 +80,12 @@ const courseData: {
     ],
   },
   3: {
-    title: "Curso de Tailwind CSS",
+    title: "Tailwind CSS",
     description: "Estilize suas aplicações de forma rápida e eficiente.",
     content:
       "Aprenda a utilizar o Tailwind CSS para criar layouts responsivos e modernos.",
-    icon: <SiTailwindcss size={80} className="text-blue-400" />,
+    icon: <SiTailwindcss size={50} className="text-blue-400" />,
+    imageUrl: "/tailwind.jpg",
     modules: [
       {
         id: 1,
@@ -103,11 +108,12 @@ const courseData: {
     ],
   },
   4: {
-    title: "Curso de JavaScript",
+    title: "JavaScript",
     description: "Domine a linguagem de programação mais popular da web.",
     content:
       "Este curso cobre desde o básico do JavaScript até conceitos avançados como Promises e Async/Await.",
-    icon: <FaJs size={80} className="text-yellow-500" />,
+    icon: <FaJs size={50} className="text-yellow-500" />,
+    imageUrl: "/js.jpg",
     modules: [
       {
         id: 1,
@@ -126,16 +132,17 @@ const courseData: {
     ],
   },
   5: {
-    title: "Curso de HTML & CSS",
+    title: "HTML & CSS",
     description: "Aprenda a construir websites com HTML5 e CSS3.",
     content:
       "Este curso ensina como estruturar e estilizar páginas web utilizando HTML5 e CSS3.",
     icon: (
       <div className="flex space-x-4 justify-center">
-        <AiOutlineHtml5 size={80} className="text-orange-500" />
-        <SiCss3 size={80} className="text-blue-500" />
+        <AiOutlineHtml5 size={50} className="text-orange-500" />
+        <SiCss3 size={50} className="text-blue-500" />
       </div>
     ),
+    imageUrl: "/html.png",
     modules: [
       {
         id: 1,
@@ -198,9 +205,16 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
 
   return (
     <div className="bg-slate-300">
-      <h1 className="text-4xl font-bold mb-4">{course.title}</h1>
-      <div className="w-full h-64 flex justify-center items-center mb-4">
-        {course.icon}
+      <h1 className="text-4xl font-bold mb-8">{course.title}</h1>
+      <div className="flex flex-col items-center mb-4">
+        <div className="mb-4">{course.icon}</div>
+        <Image
+          src={course.imageUrl}
+          alt={course.title}
+          width={300}
+          height={500}
+          className="object-cover"
+        />
       </div>
       <p className="text-lg mb-4">{course.description}</p>
 

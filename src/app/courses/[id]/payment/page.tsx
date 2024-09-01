@@ -27,7 +27,7 @@ const PaymentPage = ({ params }: { params: { id: string } }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-300">
       {!paymentCompleted ? (
         <>
           <h1 className="text-3xl font-bold mb-4">Pagamento do Curso</h1>
