@@ -5,9 +5,19 @@ import { useRouter } from "next/navigation";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 
+// Simulando os dados dos cursos para obter o nome com base no ID
+const courseData: { [key: number]: string } = {
+  1: "React",
+  2: "Next.js",
+  3: "Tailwind CSS",
+  4: "JavaScript",
+  5: "HTML & CSS",
+};
+
 const PaymentPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
   const courseId = parseInt(params.id);
+  const courseName = courseData[courseId] || "Curso Desconhecido";
   const [paymentCompleted, setPaymentCompleted] = useState(false);
   const { width, height } = useWindowSize();
 
@@ -45,8 +55,9 @@ const PaymentPage = ({ params }: { params: { id: string } }) => {
           <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-white text-center">
             Pagamento do Curso
           </h1>
-          <p className="mb-6 text-gray-300 text-center">
-            Simulação de pagamento para o curso {courseId}.
+          <p className="mb-6 text-gray-300 text-center text-2xl">
+            Você está a um passo de adquirir o curso de <br />
+            <strong>{courseName}</strong>.
           </p>
           <button
             onClick={handlePayment}
