@@ -4,7 +4,7 @@ import "./styles/globals.css";
 import React from "react";
 
 export const metadata = {
-  title: "Plataforma de Cursos",
+  title: "DevMastery",
   description: "Aprenda novos tópicos com cursos sob demanda.",
   icons: {
     icon: "/favicon.png",

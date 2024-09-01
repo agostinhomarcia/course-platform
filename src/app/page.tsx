@@ -6,7 +6,7 @@ export default function HomePage() {
     <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-900 text-white p-8">
       {/* Seção de Boas-vindas */}
       <h1 className="text-5xl font-extrabold mb-4 text-center">
-        Domine o Futuro com Nossos Cursos de Programação
+        Domine o Futuro na DevMastery
       </h1>
 
       {/* Conteúdo Principal */}

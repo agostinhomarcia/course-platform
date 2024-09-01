@@ -60,7 +60,7 @@ const courseData: {
     description: "Construa aplicações escaláveis com Next.js.",
     content:
       "Este curso aborda roteamento, SSR, SSG, API Routes, e outras funcionalidades do Next.js.",
-    icon: <SiNextdotjs size={50} className="text-gray-800" />,
+    icon: <SiNextdotjs size={50} className="text-gray-200" />,
     imageUrl: "/next.png",
     modules: [
       {
@@ -204,54 +204,59 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
   }
 
   return (
-    <div className="bg-slate-300">
-      <h1 className="text-4xl font-bold mb-8">{course.title}</h1>
-      <div className="flex flex-col items-center mb-4">
-        <div className="mb-4">{course.icon}</div>
-        <Image
-          src={course.imageUrl}
-          alt={course.title}
-          width={300}
-          height={500}
-          className="object-cover"
-        />
-      </div>
-      <p className="text-lg mb-4">{course.description}</p>
-
-      {!isEnrolled ? (
-        <button
-          onClick={handleEnrollment}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg"
-        >
-          Inscreva-se no Curso
-        </button>
-      ) : (
-        <div>
-          <p className="text-green-700 font-bold">
-            Você está inscrito neste curso!
-          </p>
-          <div className="flex space-x-4 mt-4">
-            <Link href={`/courses/${courseId}/payment`}>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
-                Ir para Pagamento
-              </button>
-            </Link>
-            <button
-              onClick={handleUnenrollment}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg"
-            >
-              Desfazer Matrícula
-            </button>
-          </div>
+    <div className="bg-gray-900 p-8 text-white flex flex-col items-center">
+      <h1 className="text-4xl font-bold text-center mb-8">{course.title}</h1>
+      <div className="flex flex-col lg:flex-row lg:space-x-8 items-center mb-8">
+        <div className="text-center lg:text-left mb-4 lg:mb-0">
+          <div className="mb-4">{course.icon}</div>
+          <Image
+            src={course.imageUrl}
+            alt={course.title}
+            width={400}
+            height={300}
+            className="object-cover mx-auto"
+          />
         </div>
-      )}
+        <div className="text-center lg:text-left">
+          <p className="text-lg mb-4">{course.description}</p>
+          {!isEnrolled ? (
+            <button
+              onClick={handleEnrollment}
+              className="bg-green-600 text-white px-4 py-2 rounded-lg"
+            >
+              Inscreva-se no Curso
+            </button>
+          ) : (
+            <div>
+              <p className="text-green-500 font-bold">
+                Você está inscrito neste curso!
+              </p>
+              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 space-x-0 sm:space-x-4 mt-4 justify-center lg:justify-start">
+                <Link href={`/courses/${courseId}/payment`}>
+                  <button className="bg-blue-600 text-white px-4 py-2 rounded-lg w-full sm:w-auto">
+                    Ir para Pagamento
+                  </button>
+                </Link>
+                <button
+                  onClick={handleUnenrollment}
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg w-full sm:w-auto"
+                >
+                  Desfazer Matrícula
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
-      <div className="mt-8">
-        <h2 className="text-3xl font-bold mb-4">Conteúdo do Curso</h2>
+      <div className="mt-8 max-w-4xl w-full">
+        <h2 className="text-3xl font-bold mb-4 text-center lg:text-left">
+          Conteúdo do Curso
+        </h2>
         {course.modules.map((module) => (
           <div key={module.id} className="mb-6">
             <h3 className="text-2xl font-semibold mb-2">{module.title}</h3>
-            <ul className="list-disc list-inside">
+            <ul className="list-disc list-inside text-gray-300">
               {module.lessons.map((lesson, index) => (
                 <li key={index} className="ml-4">
                   {lesson}
