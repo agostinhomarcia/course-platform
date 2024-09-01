@@ -1,11 +1,8 @@
-"use client";
+"use client"; // Indica que este é um Client Component
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import React from "react";
-import { getSession } from "next-auth/react";
-import { Session } from "next-auth";
+
 interface CourseDetailProps {
   params: {
     id: string;
@@ -19,6 +16,11 @@ const courseData: {
     description: string;
     content: string;
     imageUrl: string;
+    modules: {
+      id: number;
+      title: string;
+      lessons: string[];
+    }[];
   };
 } = {
   1: {
@@ -27,6 +29,26 @@ const courseData: {
     content:
       "Neste curso, você aprenderá sobre componentes, estado, hooks, e muito mais.",
     imageUrl: "/react.png",
+    modules: [
+      {
+        id: 1,
+        title: "Módulo 1: Introdução ao React",
+        lessons: [
+          "O que é React?",
+          "Configurando o ambiente",
+          "Primeiros Componentes",
+        ],
+      },
+      {
+        id: 2,
+        title: "Módulo 2: Componentes e Estado",
+        lessons: [
+          "Criando Componentes",
+          "Gerenciamento de Estado com useState",
+          "Props e Children",
+        ],
+      },
+    ],
   },
   2: {
     title: "Curso de Next.js",
@@ -34,6 +56,22 @@ const courseData: {
     content:
       "Este curso aborda roteamento, SSR, SSG, API Routes, e outras funcionalidades do Next.js.",
     imageUrl: "/next.png",
+    modules: [
+      {
+        id: 1,
+        title: "Módulo 1: Introdução ao Next.js",
+        lessons: [
+          "O que é Next.js?",
+          "Configurando o ambiente",
+          "Páginas e Roteamento",
+        ],
+      },
+      {
+        id: 2,
+        title: "Módulo 2: Renderização e APIs",
+        lessons: ["SSR vs SSG", "API Routes", "Autenticação com NextAuth"],
+      },
+    ],
   },
   3: {
     title: "Curso de Tailwind CSS",
@@ -41,35 +79,30 @@ const courseData: {
     content:
       "Aprenda a utilizar o Tailwind CSS para criar layouts responsivos e modernos.",
     imageUrl: "/tailwind.jpg",
+    modules: [
+      {
+        id: 1,
+        title: "Módulo 1: Introdução ao Tailwind CSS",
+        lessons: [
+          "O que é Tailwind CSS?",
+          "Instalação e Configuração",
+          "Utilizando utilitários básicos",
+        ],
+      },
+      {
+        id: 2,
+        title: "Módulo 2: Layouts e Estilização",
+        lessons: [
+          "Trabalhando com Grids e Flexbox",
+          "Customizando temas",
+          "Animações e Transições",
+        ],
+      },
+    ],
   },
 };
 
 const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
-  const [session, setSession] = useState<Session | null>(null); // Ajuste da tipagem
-  const router = useRouter();
-
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const session = await getSession();
-        console.log("Session:", session);
-        if (!session) {
-          router.push("/auth/signin");
-        } else {
-          setSession(session);
-        }
-      } catch (error) {
-        console.error("Error checking session:", error);
-      }
-    };
-
-    checkSession();
-  }, [router]);
-
-  if (!session) {
-    return <div>Redirecionando para a página de login...</div>;
-  }
-
   const courseId = parseInt(params.id);
   const course = courseData[courseId];
 
@@ -88,7 +121,22 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
         className="w-full h-64 object-cover mb-4"
       />
       <p className="text-lg mb-4">{course.description}</p>
-      <p>{course.content}</p>
+
+      <div className="mt-8">
+        <h2 className="text-3xl font-bold mb-4">Conteúdo do Curso</h2>
+        {course.modules.map((module) => (
+          <div key={module.id} className="mb-6">
+            <h3 className="text-2xl font-semibold mb-2">{module.title}</h3>
+            <ul className="list-disc list-inside">
+              {module.lessons.map((lesson, index) => (
+                <li key={index} className="ml-4">
+                  {lesson}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
