@@ -8,7 +8,8 @@ const courses = [
   {
     id: 1,
     title: "Curso de React",
-    description: "Aprenda React do básico ao avançado.",
+    description:
+      "Transforme sua carreira com React! Domine a biblioteca mais popular para criar interfaces dinâmicas e interativas, do básico ao avançado. Comece agora e se torne um desenvolvedor front-end requisitado!",
     icon: (
       <FaReact size={100} className="text-blue-500 mb-4 hover:text-blue-500" />
     ),
@@ -16,25 +17,29 @@ const courses = [
   {
     id: 2,
     title: "Curso de Next.js",
-    description: "Construa aplicações escaláveis com Next.js.",
+    description:
+      "Leve suas habilidades em React para o próximo nível com Next.js. Aprenda a construir aplicações escaláveis e de alta performance com o framework que está revolucionando o desenvolvimento web. Garanta sua vaga!",
     icon: <SiNextdotjs size={100} className="text-gray-800 mb-4 " />,
   },
   {
     id: 3,
     title: "Curso de Tailwind CSS",
-    description: "Estilize suas aplicações de forma rápida e eficiente.",
+    description:
+      "Crie designs modernos e responsivos de forma rápida e prática! Aprenda Tailwind CSS e descubra como personalizar estilos sem complicação. Inscreva-se e agilize seu processo de desenvolvimento.",
     icon: <SiTailwindcss size={100} className="text-blue-400 mb-4" />,
   },
   {
     id: 4,
     title: "Curso de JavaScript",
-    description: "Domine a linguagem de programação mais popular da web.",
+    description:
+      "Domine a linguagem que move a web! Este curso abrangente de JavaScript irá levá-lo desde os conceitos básicos até técnicas avançadas, preparando você para qualquer desafio de programação. Comece hoje e avance sua carreira!",
     icon: <FaJs size={100} className="text-yellow-500 mb-4" />,
   },
   {
     id: 5,
     title: "Curso de HTML & CSS",
-    description: "Aprenda a construir websites com HTML5 e CSS3.",
+    description:
+      "Construa websites impressionantes e responsivos com HTML5 e CSS3! Aprenda as melhores práticas e técnicas essenciais para criar layouts modernos e atrativos. Inscreva-se e transforme suas ideias em realidade!",
     icon: (
       <div className="flex space-x-4">
         <AiOutlineHtml5 size={100} className="text-orange-500 mb-4" />
