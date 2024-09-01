@@ -1,12 +1,18 @@
-import Image from "next/image";
-import React from "react";
+"use client";
 
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import React from "react";
+import { getSession } from "next-auth/react";
+import { Session } from "next-auth";
 interface CourseDetailProps {
   params: {
     id: string;
   };
 }
 
+// Dados simulados para os cursos
 const courseData: {
   [key: number]: {
     title: string;
@@ -39,6 +45,31 @@ const courseData: {
 };
 
 const CourseDetail: React.FC<CourseDetailProps> = ({ params }) => {
+  const [session, setSession] = useState<Session | null>(null); // Ajuste da tipagem
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const session = await getSession();
+        console.log("Session:", session);
+        if (!session) {
+          router.push("/auth/signin");
+        } else {
+          setSession(session);
+        }
+      } catch (error) {
+        console.error("Error checking session:", error);
+      }
+    };
+
+    checkSession();
+  }, [router]);
+
+  if (!session) {
+    return <div>Redirecionando para a página de login...</div>;
+  }
+
   const courseId = parseInt(params.id);
   const course = courseData[courseId];
 
